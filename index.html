@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vel Tech Events Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+
+<style>
+  /* ── RESET ── */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── COLORS (easy to change in one place) ── */
+:root {
+  --navy: #1B3A6B;
+  --teal: #0D9488;
+  --white: #ffffff;
+  --light-gray: #F4F5F7;
+  --text: #1A2332;
+  --text-muted: #4A5568;
+  --border: #dde3ed;
+}
+
+/* ── BASE ── */
+body {
+  font-family: sans-serif;
+  background: var(--light-gray);
+  color: var(--text);
+}
+
+/* ── PAGES (show/hide) ── */
+.page {
+  display: none;
+}
+.page.active {
+  display: block;
+}
+
+/* ════════════════════════
+   LOGIN PAGE
+════════════════════════ */
+#pg-login {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1B3A6B, #2A5298, #0D9488);
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+#pg-login.active {
+  display: flex;
+}
+
+.login-card {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 20px;
+  padding: 48px 40px;
+  width: 100%;
+  max-width: 420px;
+}
+
+.lc-logo {
+  width: 72px;
+  height: 72px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+.lc-logo i {
+  font-size: 28px;
+  color: var(--navy);
+}
+
+.lc-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  text-align: center;
+  color: white;
+  margin-bottom: 4px;
+}
+.lc-sub {
+  text-align: center;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 32px;
+}
+
+.lc-field {
+  margin-bottom: 16px;
+}
+.lc-field label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.75);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+.lc-field input {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+  color: white;
+  font-size: 0.9rem;
+  outline: none;
+}
+.lc-field input::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+.lc-field input:focus {
+  border-color: var(--teal);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.lc-btn {
+  width: 100%;
+  padding: 14px;
+  margin-top: 8px;
+  background: linear-gradient(135deg, var(--teal), var(--navy));
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.lc-btn:hover {
+  opacity: 0.9;
+}
+
+.lc-create {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+.lc-create button {
+  flex: 1;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.lc-create button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.lc-status {
+  text-align: center;
+  font-size: 0.82rem;
+  margin-top: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  min-height: 20px;
+}
+
+/* ════════════════════════
+   NAVBAR
+════════════════════════ */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 99;
+  height: 64px;
+  background: white;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+}
+
+.nb-l {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nb-menu {
+  width: 36px;
+  height: 36px;
+  background: var(--navy);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nb-menu i {
+  color: white;
+  font-size: 14px;
+}
+
+.nb-brand {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--navy);
+}
+.nb-brand span {
+  color: var(--teal);
+}
+
+.nb-r {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nb-av {
+  width: 36px;
+  height: 36px;
+  background: var(--teal);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: white;
+}
+
+/* ════════════════════════
+   ADMIN PAGE
+════════════════════════ */
+.admin-tabs {
+  display: flex;
+  background: white;
+  border-bottom: 1px solid var(--border);
+  padding: 0 28px;
+}
+
+.tab-btn {
+  padding: 14px 22px;
+  border: none;
+  background: transparent;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+}
+.tab-btn.active {
+  color: var(--navy);
+  border-bottom-color: var(--teal);
+}
+
+.admin-panel {
+  display: none;
+  padding: 28px;
+}
+.admin-panel.active {
+  display: block;
+}
+
+.panel-section {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+}
+.panel-section h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 18px;
+}
+.panel-section h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 14px;
+}
+
+.form-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.form-grid input {
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.88rem;
+  color: var(--text);
+  outline: none;
+  flex: 1;
+  min-width: 160px;
+}
+.form-grid input:focus {
+  border-color: var(--teal);
+}
+.form-grid button {
+  padding: 10px 20px;
+  background: linear-gradient(135deg, var(--navy), var(--teal));
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.events-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.event-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  background: var(--light-gray);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+.event-item strong {
+  color: var(--navy);
+  font-size: 0.9rem;
+}
+.event-item small {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
+.del-btn,
+.event-item button {
+  padding: 6px 14px;
+  background: #e11d48;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.loading,
+.no-data {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  padding: 20px;
+  text-align: center;
+}
+
+/* ════════════════════════
+   USER PAGE
+════════════════════════ */
+#pg-user {
+  background: var(--light-gray);
+  min-height: 100vh;
+}
+
+/* Hero */
+.user-hero {
+  background: linear-gradient(135deg, var(--navy), #2A5298, var(--teal));
+  padding: 36px 36px 32px;
+}
+
+.uh-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.uh-welcome {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.65);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+}
+.uh-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: white;
+}
+.uh-title span {
+  color: #5eead4;
+}
+
+.uh-stats {
+  display: flex;
+  gap: 14px;
+}
+.uh-stat {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 12px 18px;
+  text-align: center;
+  min-width: 80px;
+}
+.uh-stat-n {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: white;
+}
+.uh-stat-l {
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.uh-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 12px;
+  padding: 6px 6px 6px 14px;
+  max-width: 560px;
+}
+.uh-search i {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+}
+.uh-search input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 0.88rem;
+  color: white;
+}
+.uh-search input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+.uh-search button {
+  background: var(--teal);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 9px 20px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Events body */
+.user-body {
+  padding: 28px 36px 60px;
+}
+
+/* Search bar */
+.search-row {
+  margin-bottom: 28px;
+}
+.search-row input {
+  width: 100%;
+  max-width: 500px;
+  padding: 11px 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 0.9rem;
+  color: var(--text);
+  outline: none;
+  background: white;
+}
+.search-row input:focus {
+  border-color: var(--teal);
+}
+
+/* One section = label + carousel */
+.ev-section {
+  margin-bottom: 36px;
+}
+.ev-section-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ev-section-title span {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: #eaf4ff;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 2px 8px;
+}
+
+/* Carousel track */
+.carousel-wrap {
+  position: relative;
+}
+.carousel-track {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding-bottom: 8px;
+  /* hide scrollbar */
+  scrollbar-width: none;
+}
+.carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+/* Carousel arrow buttons */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 34px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1rem;
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.carousel-btn.left  { left: -16px; }
+.carousel-btn.right { right: -16px; }
+
+/* Single event card */
+.ev-card {
+  min-width: 230px;
+  max-width: 230px;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.ev-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+/* Colored top banner (no icons) */
+.ec-banner {
+  height: 90px;
+  position: relative;
+}
+.ec-banner-inner {
+  position: absolute;
+  bottom: 8px;
+  left: 10px;
+  right: 10px;
+}
+.ec-cat-badge {
+  display: inline-block;
+  background: rgba(0,0,0,0.4);
+  color: white;
+  border-radius: 5px;
+  padding: 2px 8px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* Card body */
+.ec-body {
+  padding: 12px 14px 14px;
+}
+.ec-name {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ec-meta {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+.ec-seats {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+/* Progress bar */
+.ec-prog-track {
+  height: 4px;
+  background: #e2e8f0;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.ec-prog-fill {
+  height: 100%;
+  border-radius: 10px;
+  background: linear-gradient(90deg, var(--teal), var(--navy));
+}
+
+.ec-rbtn {
+  width: 100%;
+  padding: 9px;
+  background: linear-gradient(135deg, var(--navy), var(--teal));
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.ec-rbtn:hover {
+  opacity: 0.9;
+}
+
+.ev-empty-msg {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  padding: 12px 0;
+}
+
+/* ════════════════════════
+   REGISTRATION MODAL
+════════════════════════ */
+.modal-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: rgba(10, 20, 40, 0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.modal-bg.open {
+  display: flex;
+}
+
+.modal-box {
+  background: white;
+  border-radius: 18px;
+  width: 100%;
+  max-width: 500px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+}
+
+.modal-header {
+  background: linear-gradient(135deg, var(--navy), #2A5298, var(--teal));
+  padding: 26px 26px 22px;
+  position: relative;
+}
+.modal-header h2 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 4px;
+}
+.modal-header p {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.65);
+}
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-close:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.modal-ev-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-top: 12px;
+}
+.modal-ev-emoji {
+  font-size: 1.8rem;
+}
+.modal-ev-name {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: white;
+}
+.modal-ev-meta {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.65);
+  margin-top: 2px;
+}
+
+.modal-body {
+  padding: 26px;
+}
+
+/* Steps indicator */
+.modal-steps {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 24px;
+}
+.ms {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+.ms-dot {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--light-gray);
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+.ms-dot.active {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: white;
+}
+.ms-dot.done {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: white;
+}
+.ms-lbl {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+.ms-lbl.active {
+  color: var(--navy);
+}
+.ms-line {
+  flex: 1;
+  height: 2px;
+  background: var(--border);
+  margin: 0 4px;
+}
+.ms-line.done {
+  background: var(--teal);
+}
+
+/* Form fields */
+.mf-group {
+  margin-bottom: 16px;
+}
+.mf-group label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+.mf-group input,
+.mf-group select {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: var(--text);
+  outline: none;
+  background: white;
+}
+.mf-group input:focus,
+.mf-group select:focus {
+  border-color: var(--teal);
+}
+.mf-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.modal-step {
+  display: none;
+}
+.modal-step.active {
+  display: block;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 22px;
+}
+.m-btn-back {
+  padding: 11px 18px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.m-btn-back:hover {
+  background: var(--light-gray);
+}
+.m-btn-next {
+  flex: 1;
+  padding: 11px 18px;
+  background: linear-gradient(135deg, var(--navy), var(--teal));
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.m-btn-next:hover {
+  opacity: 0.9;
+}
+
+/* Summary */
+.reg-summary {
+  background: var(--light-gray);
+  border-radius: 10px;
+  padding: 16px;
+  border: 1px solid var(--border);
+}
+.rs-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.85rem;
+}
+.rs-row:last-child {
+  border-bottom: none;
+}
+.rs-lbl {
+  color: var(--text-muted);
+}
+.rs-val {
+  color: var(--navy);
+  font-weight: 600;
+}
+
+/* Success modal */
+.succ-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 600;
+  background: rgba(10, 20, 40, 0.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.succ-modal.open {
+  display: flex;
+}
+.succ-box {
+  background: white;
+  border-radius: 18px;
+  padding: 44px 36px;
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+}
+.succ-icon {
+  width: 72px;
+  height: 72px;
+  background: var(--teal);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 18px;
+}
+.succ-icon i {
+  font-size: 28px;
+  color: white;
+}
+.succ-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+.succ-msg {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 22px;
+}
+.succ-ticket {
+  background: #eaf4ff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 22px;
+  text-align: left;
+}
+.st-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  padding: 4px 0;
+  color: var(--text-muted);
+}
+.st-row b {
+  color: var(--navy);
+}
+.succ-btn {
+  width: 100%;
+  padding: 13px;
+  background: linear-gradient(135deg, var(--navy), var(--teal));
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.succ-btn:hover {
+  opacity: 0.9;
+}
+ </style>
+</head>
+<body>
+
+  <!-- ═══════════════ LOGIN PAGE ═══════════════ -->
+  <div id="pg-login" class="page active">
+    <div class="orb o1"></div>
+    <div class="orb o2"></div>
+    <div class="orb o3"></div>
+    <div class="orb o4"></div>
+    <div class="login-card">
+      <div class="lc-logo"><i class="fas fa-university"></i></div>
+      <h1 class="lc-title">Vel Tech Events</h1>
+      <p class="lc-sub">Default credentials: 252525 / 252525</p>
+      <div class="lc-field">
+        <label>Username</label>
+        <i class="fas fa-user fi"></i>
+        <input type="text" id="login-username" value="252525" placeholder="Enter username">
+      </div>
+      <div class="lc-field">
+        <label>Password</label>
+        <i class="fas fa-lock fi"></i>
+        <input type="password" id="login-password" value="252525" placeholder="Enter password">
+      </div>
+      <button class="lc-btn" onclick="doLogin()">
+        <i class="fas fa-sign-in-alt"></i> Sign In
+      </button>
+      <div class="lc-create">
+        <button onclick="showCreateUser('user')"><i class="fas fa-user-plus"></i> Create User</button>
+        <button onclick="showCreateUser('admin')"><i class="fas fa-user-shield"></i> Create Admin</button>
+      </div>
+      <div id="login-status" class="lc-status"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ ADMIN PAGE ═══════════════ -->
+  <div id="pg-admin" class="page">
+    <nav class="navbar">
+      <div class="nb-l">
+        <button class="nb-menu" onclick="logout()"><i class="fas fa-sign-out-alt"></i></button>
+        <div class="nb-brand">Vel Tech <span>Admin</span></div>
+      </div>
+      <div class="nb-r">
+        <div class="nb-av" id="admin-avatar">A</div>
+      </div>
+    </nav>
+    <div class="admin-tabs">
+      <button class="tab-btn active" onclick="showTab('events')"><i class="fas fa-calendar-plus"></i> Events</button>
+      <button class="tab-btn" onclick="showTab('counts')"><i class="fas fa-chart-bar"></i> Counts</button>
+    </div>
+    <div id="admin-events" class="admin-panel active">
+      <div class="panel-section">
+        <h2><i class="fas fa-plus"></i> Add New Event</h2>
+        <form id="event-form">
+          <div class="form-grid">
+            <input type="text" id="event-name" placeholder="Event Name" required>
+            <input type="text" id="event-category" placeholder="Category (e.g. hackathon)" required>
+            <input type="text" id="event-venue" placeholder="Venue" required>
+            <input type="date" id="event-date" required>
+            <input type="number" id="event-capacity" value="100" placeholder="Capacity">
+            <button type="submit"><i class="fas fa-plus"></i> Add Event</button>
+          </div>
+        </form>
+      </div>
+      <div class="panel-section">
+        <h3>All Events</h3>
+        <div id="events-list" class="events-grid">Loading...</div>
+      </div>
+    </div>
+    <div id="admin-counts" class="admin-panel">
+      <div class="panel-section">
+        <h2>Registration Counts</h2>
+        <div id="counts-list" class="events-grid">Loading...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ USER PAGE ═══════════════ -->
+  <div id="pg-user" class="page">
+    <nav class="navbar">
+      <div class="nb-l">
+        <button class="nb-menu" onclick="logout()"><i class="fas fa-sign-out-alt"></i></button>
+        <div class="nb-brand">Vel Tech <span>Events</span></div>
+      </div>
+      <div class="nb-r">
+        <div class="nb-av" id="user-avatar">U</div>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="user-hero">
+      <div class="uh-top">
+        <div>
+          <div class="uh-welcome">Welcome back</div>
+          <div class="uh-title">Discover & Register<br><span>Events at Vel Tech</span></div>
+        </div>
+        <div class="uh-stats">
+          <div class="uh-stat"><div class="uh-stat-n" id="stat-total">–</div><div class="uh-stat-l">Events</div></div>
+          <div class="uh-stat"><div class="uh-stat-n" id="stat-spots">–</div><div class="uh-stat-l">Open Spots</div></div>
+        </div>
+      </div>
+      <div class="uh-search">
+        <i class="fas fa-search"></i>
+        <input type="text" id="ev-search" placeholder="Search events, categories, venues…" oninput="filterEvents()">
+        <button onclick="filterEvents()">Search</button>
+      </div>
+    </div>
+
+    <!-- Events Body -->
+    <div class="user-body">
+
+      <!-- Search bar -->
+      <div class="search-row">
+        <input type="text" id="ev-search" placeholder="Search events, venues..." oninput="renderAllSections()">
+      </div>
+
+      <!-- All carousel sections injected here by JS -->
+      <div id="all-sections">
+        <p style="color:#888; padding:20px;">Loading events...</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════ REGISTRATION MODAL ═══════════════ -->
+  <div class="modal-bg" id="reg-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+        <h2>Event Registration</h2>
+        <p>Fill in your details to secure your spot</p>
+        <div class="modal-ev-info">
+          <div class="modal-ev-emoji" id="m-emoji">🎓</div>
+          <div>
+            <div class="modal-ev-name" id="m-ev-name">Event Name</div>
+            <div class="modal-ev-meta" id="m-ev-meta">Venue · Date</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-body">
+        <!-- Steps indicator -->
+        <div class="modal-steps">
+          <div class="ms">
+            <div class="ms-dot active" id="sdot1">1</div>
+            <div class="ms-lbl active" id="slbl1">Details</div>
+          </div>
+          <div class="ms-line" id="sline1"></div>
+          <div class="ms">
+            <div class="ms-dot" id="sdot2">2</div>
+            <div class="ms-lbl" id="slbl2">Contact</div>
+          </div>
+          <div class="ms-line" id="sline2"></div>
+          <div class="ms">
+            <div class="ms-dot" id="sdot3">3</div>
+            <div class="ms-lbl" id="slbl3">Confirm</div>
+          </div>
+        </div>
+
+        <!-- Step 1: Personal -->
+        <div class="modal-step active" id="mstep1">
+          <div class="mf-group">
+            <label>Full Name</label>
+            <input type="text" id="reg-name" placeholder="e.g. Rahul Kumar">
+          </div>
+          <div class="mf-row">
+            <div class="mf-group">
+              <label>Register Number</label>
+              <input type="text" id="reg-num" placeholder="e.g. 23BCE1234">
+            </div>
+            <div class="mf-group">
+              <label>Year</label>
+              <select id="reg-year">
+                <option value="">Select Year</option>
+                <option>1st Year</option>
+                <option>2nd Year</option>
+                <option>3rd Year</option>
+                <option>4th Year</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-actions">
+            <button class="m-btn-next" onclick="mNext(1)">Next <i class="fas fa-arrow-right"></i></button>
+          </div>
+        </div>
+
+        <!-- Step 2: Contact -->
+        <div class="modal-step" id="mstep2">
+          <div class="mf-group">
+            <label>Department</label>
+            <input type="text" id="reg-dept" placeholder="e.g. Computer Science">
+          </div>
+          <div class="mf-row">
+            <div class="mf-group">
+              <label>Phone Number</label>
+              <input type="tel" id="reg-phone" placeholder="e.g. 9876543210">
+            </div>
+            <div class="mf-group">
+              <label>Email (optional)</label>
+              <input type="email" id="reg-email" placeholder="your@email.com">
+            </div>
+          </div>
+          <div class="modal-actions">
+            <button class="m-btn-back" onclick="mBack(2)"><i class="fas fa-arrow-left"></i> Back</button>
+            <button class="m-btn-next" onclick="mNext(2)">Review <i class="fas fa-arrow-right"></i></button>
+          </div>
+        </div>
+
+        <!-- Step 3: Confirm -->
+        <div class="modal-step" id="mstep3">
+          <div class="reg-summary" id="reg-summary"></div>
+          <div class="modal-actions">
+            <button class="m-btn-back" onclick="mBack(3)"><i class="fas fa-arrow-left"></i> Back</button>
+            <button class="m-btn-next" onclick="submitReg()"><i class="fas fa-check"></i> Confirm Registration</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUCCESS MODAL -->
+  <div class="succ-modal" id="succ-modal">
+    <div class="succ-box">
+      <div class="succ-icon"><i class="fas fa-check"></i></div>
+      <div class="succ-title">You're Registered!</div>
+      <div class="succ-msg">Your spot has been confirmed. See you at the event!</div>
+      <div class="succ-ticket" id="succ-ticket"></div>
+      <button class="succ-btn" onclick="closeSucc()">Back to Events</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

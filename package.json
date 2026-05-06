@@ -1,0 +1,19 @@
+{
+  "name": "veltech-portal",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.4",
+    "cors": "^2.8.6",
+    "express": "^4.22.1",
+    "mysql2": "^3.20.0"
+  },
+  "description": "",
+  "main": "script.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}
